@@ -1,0 +1,48 @@
+.titleYT{
+    text-align:  left;
+    font-size: 18px;
+}
+.right{
+    text-align: right;
+}
+.left{
+    text-align: left;
+}
+
+.duracion{
+    position: absolute;
+    right:0;
+    bottom:0;
+    background-color: black;
+    color: white;
+    font-size: 12px;
+}
+
+
+
+.canalText{
+    font-size: 11px;
+}
+
+.visTime{
+    font-size: 11px;
+}
+
+.imagen-box{
+    position: relative;
+    width: 360px;
+    display: flex;
+ }
+
+ .botones{
+    justify-content: space-evenly;
+    display: flex;
+    width: 50%;
+ }
+
+
+ @media (max-width: 600px) {
+    .downText {
+      padding: 5%;
+    }
+  }

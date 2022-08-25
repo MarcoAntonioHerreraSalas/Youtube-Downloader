@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+
+div#flotante{
+  background: #E3E1E0;
+  position: fixed ;
+  width: 40em;
+  height: auto;
+  float: right;
+  top: 20px;
+  padding: 10px;
+  z-index: 100;
+  right: 0;
+ 
+}
+
+.swal2-popup {
+  font-size: 5px !important;
+  font-family: Georgia, serif;
+}
