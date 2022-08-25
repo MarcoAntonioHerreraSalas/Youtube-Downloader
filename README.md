@@ -3,7 +3,8 @@
 Este proyecto se desarrollo con fines educativos basado en el lenguaje de React y Python como Backend.
 
 <img src="./1.PNG" >
-
+<img src="./2.PNG" >
+<img src="./3.PNG" >
 
 ## Proceso de la Instalación
 
@@ -28,25 +29,17 @@ In the project directory, you can run:
 `import os`
 `from firebase import firebase`
 
-una vez instalado todo ejecuta el acceso directo llamado `Youtube MP3`
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### una vez instalado todo ejecuta el acceso directo llamado `Youtube MP3`
 
 
 **Nota: El programa es de uso publico para fines educativos no me hago responsable del mal uso del mismo...  !**
 
 
-## Learn More
+## Acerca de
 El backend esta desarrollado en Python utilizando Flask para hacer scrapy web tiene algunos bugs que se estarán corrigiendo poco a poco uno de estos bugs es al momento de descargar varios archivos a la vez el programa no responde como deberia ya que no esta desarrollado en colas o bien en clases. 
 
 
-### Deployment
+### Desarrollo
 
 El desarrollo de este sistema se realizó por Marco Antonio Herrera Salas
 desarrollado en React y Python asi mismo se utilizo una base de datos NoSQL MongoDB 
