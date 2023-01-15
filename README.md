@@ -36,8 +36,17 @@ In the project directory, you can run:
 
 
 ## Acerca de
-El backend esta desarrollado en Python utilizando Flask para hacer scrapy web tiene algunos bugs que se estarán corrigiendo poco a poco uno de estos bugs es al momento de descargar varios archivos a la vez el programa no responde como deberia ya que no esta desarrollado en colas o bien en clases. 
+El backend esta desarrollado en Python utilizando Flask para hacer scrapy web tiene algunos bugs que se estarán corrigiendo poco a poco...
 
+
+### BUGS SOLUCIONADOS 
+
+EL backend al mandar varios archivos no funcionaba las descargas correctamente se soluciono metiendo a clases la programación para que generaran nuevas instancias. 
+
+### BUGS PENDIENTES
+
+El front end no responde a la actualizacion de los estados correctamente se implementara Redux para facilitar el trasporte de los estados.
+El backend tiene problemas al mandar muchos datoa se necesita renderizar (Solucion pendiente)
 
 ### Desarrollo
 
