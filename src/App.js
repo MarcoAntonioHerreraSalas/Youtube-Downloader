@@ -4,16 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState,useEffect} from 'react';
 import Video from './Components/Video'
 import React from "react";
-import { initializeApp } from "firebase/app";
-import { getDatabase,ref, onValue,remove } from "firebase/database";
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import firebaseConfig from './firebaseConf';
-import {getVideosFirebase,updateBarProgress,removeVideo} from './firebaseModel';
+import updateBarProgress from  './Components/progress';
 import SearchYT from './searchRequest.js'
-
-
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
 
 const Bars = (data) => {
   return <ProgressBar id={data.data} variant="success" key={2}  now={0} label={`${0}%`} />;
@@ -24,29 +17,41 @@ function App() {
   const [searchValue, setSearchValue] = useState([]);
   const [dataDownload, setdataDownload] = useState([]);
 
-  const interval = setInterval(() => {
 
-    if(dataDownload.length > 0){
+  useEffect(() => {
 
-      const json = getVideosFirebase(database);
-      updateBarProgress(json);
-    }
-  
-  }, 500);
+      const serverBaseURL = "http://localhost:6969/downloadProgress";
+      const sse = new EventSource(serverBaseURL);
+      function handleStream(e){
+        const data = JSON.parse(e.data);
+        dataDownload.map((dw) => {dw.estatus = data.find(d => d.id == dw.id).estatus;})
+        updateBarProgress(dataDownload);
+        
+        if(dataDownload.length > 0){
+          var newData = dataDownload.filter((x) => x.estatus.DownloadProgress !== 100);
+          setdataDownload(newData);
+        }
+        
+      }
+      sse.onmessage = e => {handleStream(e);}
+      sse.onerror = e => {sse.close();}
+      return () => {
+        sse.close();
+      };
+  })
+
 
   const handleClick = val => {
     setSearchValue(val);
   };
 
 
-  const handleClickDownload = (val,type) => {
+  const handleClickDownload = (element,type) => {
     if(type === "remove"){
-      const newData = dataDownload.filter((x) => x !== val );
+      const newData = dataDownload.filter((x) => x.id !== element.id );
       setdataDownload(newData);
-      const getVideos = getVideosFirebase(database);
-      removeVideo(getVideos,val,database);
     }else{
-      setdataDownload([...dataDownload, val]);
+      setdataDownload([...dataDownload, element]);
     }
   };
 
@@ -69,12 +74,11 @@ function App() {
 
           dataDownload.map(function(e, i){
             return (
-              <div>
-                <span className='small titleFileDwn'>{
-                  searchValue.filter((x) => e === x.url)[0].titulo
-    
+              <div key={"div"+e.id} id={"div"+e.id}>
+                <span key={"span"+e.id} className='small titleFileDwn'>{
+                  e.title
                 }</span>
-                <Bars key={i} data={e}></Bars>
+                <Bars id={"idbar"+e.id} key={"bar"+e.id}  data={e.DownloadProgress}></Bars>
               </div>
               )
           })

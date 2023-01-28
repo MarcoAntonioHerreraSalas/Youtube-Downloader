@@ -15,48 +15,6 @@ function getVideosFirebase(database){
 
     return arrayData;
 }
-
-function updateBarProgress(json){
-    if(json.length === 0){return false;}
-
-    json.forEach(element => {
-        var url = element.data.id;
-        url = url.replace('https://www.youtube.com/','');
-        var progress = element.data.DownloadProgress;
-        if(progress <= 100){
-            var el = document.getElementById(url,'');
-            if(el !== null){
-              el.firstChild.setAttribute('aria-valuenow',progress)
-              el.firstChild.style.width = progress+"%";
-              el.firstChild.innerHTML = progress+"%"
-            }
-        }
-    });
-    // for (var field in json) {
-    //     var key = field;
-    //     var url = json[key]["id"];
-
-    //     if(url !== undefined){
-    //       url = url.replace('https://www.youtube.com/','');
-
-    //       var progress =  json[key]["DownloadProgress"];
-    //       if(progress <= 100){
-    //         var el = document.getElementById(url,'');
-    //         if(el !== null){
-    //           el.firstChild.setAttribute('aria-valuenow',progress)
-    //           el.firstChild.style.width = progress+"%";
-    //           el.firstChild.innerHTML = progress+"%"
-    //         }
-
-
-    //       }
-          
-
-    //     }
-
-    // }
-}
-
 function removeVideo(json,item,database){
     if(json.length === 0){return false;}
     json.forEach(element => {
@@ -69,4 +27,4 @@ function removeVideo(json,item,database){
     
 }
 
-export  {getVideosFirebase,updateBarProgress,removeVideo};
+export  {getVideosFirebase,removeVideo};

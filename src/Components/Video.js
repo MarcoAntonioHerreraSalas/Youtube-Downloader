@@ -2,44 +2,28 @@ import axios from "axios";
 import Swal from 'sweetalert2'
 import React from "react";
 import { initializeApp } from "firebase/app";
-import { getDatabase,ref, onValue,remove } from "firebase/database";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import firebaseConfig from '../firebaseConf';
 import Dropdown from 'react-bootstrap/Dropdown';
 import  './Video.css';
 
 const notify = (message) => toast(message);
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
 
-function download(url,handleClickDownload,type){
-    handleClickDownload(url,"add")
-    
+function download(element,handleClickDownload,type){
+    var randomId = Math.floor(Math.random() * 99999999999);
+    const data = {"id": randomId,"url":'https://www.youtube.com/'+element.url,"type_d":type,'title': element.titulo,
+    "estatus" : {'DownloadProgress': 0,'TotalSize':0,'Downloaded': 0,'Remaining': 0}};
 
-    var FormData = require('form-data');
-    var data = new FormData();
-    data.append('url', 'https://www.youtube.com/'+url);
-    data.append('type',type);
+    handleClickDownload(data,"add")
 
-    var config = {
-      method: 'post',
-      url: 'http://localhost:6969/backendDownloadMp3',
-      data : data
-    };
-    var el = document.getElementById(url);
+    var config = {method: 'post',url: 'http://localhost:6969/backendDownloadMp3',data : data};
+    // var el = document.getElementById(randomId);
     axios(config)
     .then((response) => {
-        handleClickDownload(url,"remove")
-        var el = document.getElementById(url);
-        notify( 'Descarga Completa: '+ el.previousSibling.textContent);
-
+        notify( 'Descarga Completa: '+ element.titulo);
     }, (error) => {
-        
-        var el = document.getElementById(url);
-        notify( 'Error de Descarga intenté con otro video: '+ el.previousSibling.textContent);
-        handleClickDownload(url,"remove")
-        console.log(error);
+        notify( 'Error de Descarga con: '+element.titulo+'intenté con otro video');
+        handleClickDownload(data,"remove")
         Swal.close()
       });
     
@@ -76,20 +60,20 @@ function Video(props){
               <div className="mt-5 btn-group botones">
 
                 <button  className="btn btn-danger" type="button" onClick={event => 
-                    download(e.url,props.handleClickDownload,"MP3")
+                    download(e,props.handleClickDownload,"MP3")
                 }>MP3</button>
                 &nbsp;
                 <Dropdown>
                   <Dropdown.Toggle variant="danger" id="dropdown-basic"> Video</Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item  onClick={event => download(e.url,props.handleClickDownload,18)}>
+                    <Dropdown.Item  onClick={event => download(e,props.handleClickDownload,18)}>
                       360P (.mp4)
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={event => download(e.url,props.handleClickDownload,22)}>
+                    <Dropdown.Item onClick={event => download(e,props.handleClickDownload,22)}>
                       480p (.mp4)
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={event => download(e.url,props.handleClickDownload,137)}>
+                    <Dropdown.Item onClick={event => download(e,props.handleClickDownload,137)}>
                       1080p (.mp4)
                     </Dropdown.Item>
                   </Dropdown.Menu>
